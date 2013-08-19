@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PRoDroid</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_loadfile">Lade .gcode Datei</string>
+    <string name="lblBtnReset">Reset</string>
+    <string name="lblBtnConnect">Verbinden</string>
+    <string name="lblBtnDisconnect">Trennen</string>
+    <string name="bed_">Bed:</string>
+    <string name="heat_">Heat:</string>
+    <string name="heat_on">Heat ON</string>
+    <string name="heat_off">Heat Off</string>
+    <string name="bed_on">Bed ON</string>
+    <string name="bed_off">Bed OFF</string>
+    <string name="cant_send_printer_not_online">Senden nicht möglich, Drucker ist offline!</string>
+    <string name="loading">Lade</string>
+    <string name="loading_file_please_stand_by_">Lade Datei, bitte warten.</string>
+    <string name="hello">Hello</string>
+    <string name="connection_to_printer_failed_">Verbinden zum Drucker fehlgeschlagen</string>
+    <string name="print">Drucken</string>
+    <string name="pause">Pause</string>
+    <string name="debug_mode">Debug Modus</string>
+    <string name="enable_application_debug_output">Fehlerausgaben der Anwendung aktivieren</string>
+    <string name="printer_is_offline_unable_to_move_">Drucker ist offline, bewegen nicht möglich </string>
+    <string name="printer_is_currently_printing_please_pause_the_print_before_you_issue_manual_commands_">Druck läuft, bitte den Drucker pausieren um manuelle Kommandos auszuführen.</string>
+    <string name="setting_hotend_temperature_to_">"Setze Temperatur auf "</string>
+    <string name="_degree_celsius_">" °C.\n"</string>
+    <string name="printer_is_online_">"Drucker ist online: "</string>
+    <string name="buffer_is_null_">Buffer ist leer\n</string>
+    <string name="input_cannot_be_empty">Eingabe darf nicht leer sein</string>
+    <string name="title_activity_list_files">Dropbox Dateien</string>
+    <string name="connecting_to_dropbox_">Verbinde zur Dropbox</string>
+    <string name="please_check_your_connection_">Bitte prüfen sie ihre Verbindung.</string>
+    <string name="could_not_connect_to_dropbox_">Verbindung zur Dropbox fehlgeschlagen.</string>
+    <string name="downloading_file_">Zwischenspeichern.</string>
+    <string name="connection_error">Verbindungsfehler</string>
+    <string name="error_authenticating">Anmeldungsfehler</string>
+    <string name="pleace_specify_the_extrude_distance_in_mm_default_5_">Bitte geben sie die Extruderdistanz in mm an (Vorgabe 5)</string>
+    <string name="invalid_input_">uUngültige Eingabe!</string>
+    <string name="pleace_specify_the_extrude_rate_in_mm_min_default_300_">Bitte geben sie die Extruderrate in mm/min an (Vorgabe 300)</string>
+    <string name="setting_bed_temperature_to_">"Setze Betttemperatur "</string>
+    <string name="print_finished_">Druck abgeschlossen</string>
+    <string name="no_items_to_display_">Keine Elemente zum anzeigen!</string>
+    <string name="watch">Überwachung</string>
+    <string name="stop_watch">Überwachung</string>
+    <string name="extrude">Extrudieren</string>
+    <string name="reverse">Umkehren</string>
+        <string name="please_check_the_connectionsettings_and_make_sure_baudrate_is_correct_">Bitte prüfen Sie die Verbindingseinstellungen, insbesondere die Baudrate.</string>
+
+</resources>

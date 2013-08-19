@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlextruder"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="horizontal"
+    android:textAlignment="center" >
+
+    <LinearLayout
+        android:id="@+id/llExtrude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btnExtrude"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:text="@string/extrude" />
+
+        <EditText
+            android:id="@+id/edtExtrudeDist"
+            android:textAppearance="?android:attr/textAppearanceSmallInverse"
+             android:layout_width="75dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="27dp"
+            android:ems="10"
+            android:text="5"
+            android:inputType="number" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llReverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btnReverse"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:text="@string/reverse" />
+
+        <EditText
+            android:id="@+id/edtExtrudeRate"
+            android:layout_width="75dip"
+            android:textAppearance="?android:attr/textAppearanceSmallInverse"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="27dp"
+            android:ems="10"
+            android:text="300"
+            android:inputType="number" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+</LinearLayout>

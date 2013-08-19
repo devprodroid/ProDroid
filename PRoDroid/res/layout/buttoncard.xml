@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llButtons"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:drawable/dialog_holo_light_frame"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ToggleButton
+            android:id="@+id/btnHeat"
+            android:layout_width="85dip"
+            
+            android:layout_height="wrap_content"
+            android:textOff="@string/heat_off"
+            android:textOn="@string/heat_on" />
+
+        <Spinner
+            android:id="@+id/spHeat"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:entries="@array/saHeatTemps"
+            android:prompt="@string/heat_" />
+
+        <ToggleButton
+            android:id="@+id/btnMonitor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/watch"
+            android:textOn="@string/stop_watch" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <ToggleButton
+            android:id="@+id/btnBed"
+            android:layout_width="85dip"
+            android:layout_height="wrap_content"
+            android:textOff="@string/bed_off"
+            android:textOn="@string/bed_on" />
+
+        <Spinner
+            android:id="@+id/spBed"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:entries="@array/saBedTemps"
+            android:prompt="@string/bed_" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvHeat"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <ProgressBar
+        android:id="@+id/pbHeat"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:progress="0" />
+
+    <TextView
+        android:id="@+id/tvBed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:text="TextView" />
+
+    <ProgressBar
+        android:id="@+id/pbBed"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:progress="0" />
+
+</LinearLayout>

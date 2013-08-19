@@ -1,0 +1,53 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="115200"
+        android:dialogTitle="Select data rate"
+        android:entries="@array/pref_comm_baudrate_entries"
+        android:entryValues="@array/pref_comm_baudrate_values"
+        android:key="pref_comm_baudrateselect"
+        android:title="Data rate in bits per second (baud)" />
+    <ListPreference
+        android:defaultValue="8"
+        android:dialogTitle="Select number of data bits"
+        android:entries="@array/pref_comm_databits_entries"
+        android:entryValues="@array/pref_comm_databits_values"
+        android:key="pref_comm_databitsselect"
+        android:title="Number of data bits" />
+    <ListPreference
+        android:defaultValue="1"
+        android:dialogTitle="Select number of stop bits"
+        android:entries="@array/pref_comm_stopbits_entries"
+        android:entryValues="@array/pref_comm_stopbits_values"
+        android:key="pref_comm_stopbitsselect"
+        android:title="Number of stop bits" />
+    <ListPreference
+        android:defaultValue="0"
+        android:dialogTitle="Select type of parity "
+        android:entries="@array/pref_comm_parity_entries"
+        android:entryValues="@array/pref_comm_parity_values"
+        android:key="pref_comm_paritybitselect"
+        android:title="Parity bits" />
+
+    <Preference
+        android:key="pref_comm_dropbx"
+        android:summary="Delete Dropbox credentials"
+        android:title="Disconnect Dropbox" />
+
+    <CheckBoxPreference
+        android:key="pref_comm_webserver"
+        android:summary="Start a webserver for monitoring the Printer"
+        android:title="Enable Monitoring Webserver" />
+
+    <EditTextPreference
+        android:defaultValue="8080"
+        android:inputType="number"
+        android:key="pref_comm_webserver_port"
+        android:title="Monitoring Webserver Port" />
+
+    <CheckBoxPreference
+        android:key="pref_comm_debug"
+        android:summary="@string/enable_application_debug_output"
+        android:title="@string/debug_mode" />
+
+</PreferenceScreen>

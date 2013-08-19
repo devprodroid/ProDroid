@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+    <item
+        android:id="@+id/action_connect"
+        android:icon="@drawable/contentimportexport"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText"
+        android:title="@string/lblBtnConnect"/>
+    <item
+        android:id="@+id/action_reset"
+        android:icon="@drawable/reset"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText"
+        android:title="@string/lblBtnReset"/>
+     <item
+        android:id="@+id/action_loadFile"
+        android:icon="@drawable/collectionscollection"
+        android:orderInCategory="150"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/action_loadfile"/>
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/actionsettings"
+        android:orderInCategory="200"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/action_settings"/>
+
+    
+
+</menu>

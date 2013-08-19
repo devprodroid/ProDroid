@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlextruder"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="horizontal"
+    android:textAlignment="center" >
+
+    <LinearLayout
+        android:id="@+id/llExtrude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btnExtrude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/extrude" />
+
+        <EditText
+            android:id="@+id/edtExtrudeDist"
+            android:layout_width="101dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:text="5" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llReverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btnReverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+          
+            android:text="@string/reverse" />
+
+        <EditText
+            android:id="@+id/edtExtrudeRate"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:text="300" />
+    </LinearLayout>
+
+</LinearLayout>

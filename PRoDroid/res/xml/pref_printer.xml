@@ -1,0 +1,16 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+<EditTextPreference
+    android:title="X and Y manual feedrate"
+   android:key="pref_print_xyfeedrate" 
+    android:defaultValue="300"></EditTextPreference>
+<EditTextPreference
+    android:title="z manual feedrate"
+   android:key="pref_print_zfeedrate"
+    android:defaultValue="200"></EditTextPreference>
+<EditTextPreference
+    android:title="e manual feedrate"
+   android:key="pref_print_efeedrate"
+   android:defaultValue="300"></EditTextPreference>
+
+</PreferenceScreen>

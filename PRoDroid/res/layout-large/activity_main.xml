@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity"
+    tools:ignore="ButtonStyle" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/llprintInfos"
+            android:layout_width="200dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/rlcontrols_ref"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnStartPrint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/print" />
+
+            <Button
+                android:id="@+id/btnPausePrint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pause" />
+
+            <TextView
+                android:id="@+id/tvProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="40%"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/rlcontrols_ref"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/demoTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hello" />
+
+            <ScrollView
+                android:id="@+id/demoScroller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/demoText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="100"
+                    android:typeface="monospace" />
+            </ScrollView>
+        </LinearLayout>
+
+        <include
+            android:id="@+id/buttoncard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/rlcontrols_ref"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/llprintInfos"
+            layout="@layout/buttoncard" />
+
+        <include
+            android:id="@+id/rlcontrols_ref"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/buttoncard"
+            layout="@layout/rlcontrols" />
+    </RelativeLayout>
+
+</RelativeLayout>

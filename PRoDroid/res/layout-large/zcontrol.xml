@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlzcontrol"
+    android:layout_width="match_parent"
+    android:layout_height="150dip"
+    android:textAlignment="center" >
+
+    <ImageButton
+        android:id="@+id/btn_z_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/centerhome"
+        android:text="Home" />
+
+    <Button
+        android:id="@+id/btn_z_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_z_home"
+        android:layout_centerHorizontal="true"
+        android:text="-Z" />
+
+    <Button
+        android:id="@+id/btn_z_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_z_home"
+        android:layout_centerHorizontal="true"
+        android:text="+Z" />
+
+</RelativeLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="saHeatTemps">
+        <item>0 (off)</item>
+        <item>185 (pla)</item>
+        <item>230 (abs)</item>
+        <item>Custom</item>
+ 
+    </string-array>
+    <string-array name="saBedTemps">
+        <item>0 (off)</item>
+        <item>60 (pla)</item>
+        <item>110 (abs)</item>
+         <item>Custom</item>
+    </string-array>
+
+    
+    
+    
+    
+    
+    
+    
+</resources>
