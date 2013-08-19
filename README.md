@@ -10,4 +10,4 @@ without any modifications on hard-and software.
 The progress can be watched with the help of a lightweight webserver running in the background of the app.
 
 
-Informations about SKD settings or configurations are to be 
+Informations about SKD settings or configurations are to be added.
