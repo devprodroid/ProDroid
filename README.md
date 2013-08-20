@@ -11,3 +11,6 @@ The progress can be watched with the help of a lightweight webserver running in 
 
 
 Informations about SKD settings or configurations are to be added.
+
+
+Licensed under the GNU General Public License v3
