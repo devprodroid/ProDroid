@@ -72,7 +72,7 @@ import com.lamerman.SelectionMode;
 
 /**
  * @author robert
- *
+ * 
  */
 public class MainActivity extends Activity implements OnItemSelectedListener {
 
@@ -154,7 +154,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 	// Dropbox
 	static final int DBX_CHOOSER_REQUEST = 12;
-	private static final String APP_KEY = "0";
+	private static final String APP_KEY = "d4es7dq3pyam4o1";
 	private DbxChooser mChooser;
 
 	@Override
@@ -163,6 +163,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		setContentView(R.layout.activity_main);
 		sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+		if (sharedPref == null) {
+			throw (new ExceptionInInitializerError());
+		}
 
 		linkViews();
 
@@ -186,7 +189,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		findViewById(R.id.mainLayout).requestFocus();
 
 		mChooser = new DbxChooser(APP_KEY);
-		
+
 		// mChooser.pretendNotAvailable();
 
 		// Create weserver
@@ -748,8 +751,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 	/**
 	 * Shows a Line of text in the logwindow
+	 * 
 	 * @param aLine
-	 * 			The Message
+	 *            The Message
 	 */
 	public void showMessage(String aLine) {
 		Time now = new Time();
@@ -855,8 +859,10 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		pbHeat.setProgress(heatTemp);
 		pbBed.setProgress(bedTemp);
 
-		tvHeat.setText("Heater: " + lPrintcore.getTemperature() + "CÂ°");
-		tvBed.setText("Bed: " + lPrintcore.getBedtemperature() + "CÂ°");
+		tvHeat.setText("Heater: " + lPrintcore.getTemperature() + "°C / "
+				+ lPrintcore.getTemperature_target());
+		tvBed.setText("Bed: " + lPrintcore.getBedtemperature() + "°C / "
+				+ lPrintcore.getBedtemperature_target());
 
 	}
 

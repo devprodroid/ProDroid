@@ -66,6 +66,7 @@ public class Printcore {
 	String nextLine = null;
 
 	private float temperature;
+	private float temperature_target;
 
 	public void setTemperature(float temperature) {
 		this.temperature = temperature;
@@ -84,6 +85,7 @@ public class Printcore {
 	}
 
 	private float bedtemperature;
+	private float bedtemperature_target;
 
 	private int selectedTemp;
 
@@ -113,8 +115,6 @@ public class Printcore {
 	private long mfileLength;
 	private int progress = 0;
 
-
-
 	/**
 	 * Linenumber to resend from in case of transmission error
 	 */
@@ -132,11 +132,11 @@ public class Printcore {
 	private MainActivity lMainActivity;
 
 	private Printer lPrinter;
-	private Thread addThread=null;
+	private Thread addThread = null;
 
 	private boolean printing;
 	private boolean pause;
-	
+
 	private NotificationManager mNotificationManager;
 
 	/**
@@ -176,11 +176,12 @@ public class Printcore {
 
 		lPrinter = new Printer(this, lMainActivity);
 		lPrinter.setOnline(false);
-		mNotificationManager = (NotificationManager) lMainActivity.getSystemService(lMainActivity.NOTIFICATION_SERVICE);
+		mNotificationManager = (NotificationManager) lMainActivity
+				.getSystemService(lMainActivity.NOTIFICATION_SERVICE);
 	}
 
 	public void connect() {
-		
+
 		setPrinterProperties();
 		if (lPrinter.isConnected()) {
 			disconnect();
@@ -209,7 +210,7 @@ public class Printcore {
 	/**
 	 * resume connection to printer
 	 */
-	public void resume() { 
+	public void resume() {
 
 		setPrinterProperties();
 
@@ -238,8 +239,8 @@ public class Printcore {
 		lPrinter.reset();
 
 	}
-	
-	public void printtest(){
+
+	public void printtest() {
 
 	}
 
@@ -273,16 +274,18 @@ public class Printcore {
 					connectHandler.removeCallbacks(connectRunnable);
 					lMainActivity.showMessage(lMainActivity
 							.getString(R.string.connection_to_printer_failed_));
-					lMainActivity.alertUser(lMainActivity
-							.getString(R.string.connection_to_printer_failed_), lMainActivity
-							.getString(R.string.please_check_the_connectionsettings_and_make_sure_baudrate_is_correct_));
+					lMainActivity
+							.alertUser(
+									lMainActivity
+											.getString(R.string.connection_to_printer_failed_),
+									lMainActivity
+											.getString(R.string.please_check_the_connectionsettings_and_make_sure_baudrate_is_correct_));
 				}
 				// Start runnable again after wait time
 				connectHandler.postDelayed(this, 1000);
 			}
 		}
 	};
-	
 
 	public void enableMonitoring() {
 		if (isOnline()) {
@@ -311,7 +314,6 @@ public class Printcore {
 
 		}
 	};
-	
 
 	/**
 	 * Send Lines to the Printer
@@ -414,7 +416,9 @@ public class Printcore {
 					recvlines.add(splitMessage[i]);
 				}
 				bufferedlines.clear();
-				// lMainActivity.logReceivedData(recvlines.toString());
+				if (debugMode) {
+					lMainActivity.showMessage(recvlines.toString());
+				}
 				readlines();
 			}
 		} else { // message has no line break
@@ -440,7 +444,7 @@ public class Printcore {
 			throw new IllegalArgumentException(
 					lMainActivity.getString(R.string.input_cannot_be_empty));
 		}
-		
+
 		if (lPrinter.isConnected()) {
 			if (!lPrinter.isOnline()) { // printer offline
 				checkAndSetOnline();
@@ -483,16 +487,13 @@ public class Printcore {
 	 * @return true if start was successful
 	 */
 	public boolean startPrint(String aFileName, long afileLength, long startpos) {
-		
+
 		if (printerReadyForCommand() && (!isPrinting())) {
 			mfileLength = afileLength;
-			openInputFile(aFileName);	
-			
-			
-			
+			openInputFile(aFileName);
+
 			addThread = new Thread(new AddThread());
 			addThread.start();
-			
 
 			send("M110", -1, true); // Set Current Linenumber
 			setPrinting(true);
@@ -507,12 +508,11 @@ public class Printcore {
 			return false;
 	}
 
-
-
 	/**
 	 * Opens a File from the local filesystem
+	 * 
 	 * @param aFileName
-	 * 			Path to the local file
+	 *            Path to the local file
 	 */
 	private void openInputFile(String aFileName) {
 
@@ -595,7 +595,7 @@ public class Printcore {
 				send(tmpLine, lineno, true);
 
 			else {
-				
+
 				stopPrint();
 			}
 		}
@@ -642,29 +642,41 @@ public class Printcore {
 		}
 	}
 
+	/**
+	 * Parse a recieved line for Heater and Bed Temperatures. This is critical
+	 * to protocol changes, but should be robust in this form
+	 * 
+	 * @param aLine
+	 */
 	private void parseTemperatures(String aLine) {
 		String[] splitLine = aLine.split(" ");
-		if ((aLine.startsWith("ok"))
-				&& (aLine.contains("T:") && (aLine.contains("B:")))) {
+		try {
+			if ((aLine.startsWith("ok"))
+					&& ((aLine.contains("T:") || (aLine.contains("B:"))))) {
 
-			if (splitLine[1].startsWith("T:"))
-				setTemperature(Float.parseFloat(splitLine[1].substring(2)));
+				for (int i = 0; i < splitLine.length; i++) {
+					if (splitLine[i].startsWith("T:")) {
+						setTemperature(Float.parseFloat(splitLine[i]
+								.substring(2)));
+						if (splitLine[i + 1].startsWith("/"))
+							setTemperature_target(Float
+									.parseFloat(splitLine[i + 1].substring(1)));
 
-			if (splitLine[2].startsWith("B:"))
-				setBedtemperature(Float.parseFloat(splitLine[2].substring(2)));
-		} else {
-			// maybe single temps
-			try {
-				if (splitLine[0].startsWith("T:"))
-					setTemperature(Float.parseFloat(splitLine[0].substring(2)));
+					}
 
-				if (splitLine[0].startsWith("B:"))
-					setBedtemperature(Float.parseFloat(splitLine[0]
-							.substring(2)));
-			} catch (Exception e) {
-
+					if (splitLine[i].startsWith("B:")) {
+						setBedtemperature(Float.parseFloat(splitLine[i]
+								.substring(2)));
+						if (splitLine[i + 1].startsWith("/"))
+							setBedtemperature_target(Float
+									.parseFloat(splitLine[i + 1].substring(1)));
+					}
+				}
 			}
+		} catch (Exception e) {
+			Log.e("Parse Error", "Parser Error in Line: " + aLine + ".");
 		}
+
 		lMainActivity.notifyNewTemperatures();
 
 	}
@@ -694,7 +706,9 @@ public class Printcore {
 	 */
 	public boolean changeBedTemp(int aTemp) { // do_bedtemp
 		if ((aTemp >= 0) && printerReadyForCommand()) {
-			lMainActivity.showMessage(lMainActivity.getString(R.string.setting_bed_temperature_to_) + aTemp
+			lMainActivity.showMessage(lMainActivity
+					.getString(R.string.setting_bed_temperature_to_)
+					+ aTemp
 					+ " degrees Celsius.\n");
 
 			send("M140 S" + aTemp, 0, false);
@@ -750,7 +764,7 @@ public class Printcore {
 		setPrinting(false);
 		setPause(true);
 
-		//stopPrint();
+		// stopPrint();
 
 	}
 
@@ -769,49 +783,50 @@ public class Printcore {
 		this.printing = printing;
 		if (!printing) {
 
-			//stopPrint();
-			
+			// stopPrint();
+
 		}
 	}
 
 	/**
 	 * 
 	 */
-	
+
 	private void stopPrint() {
-		
-        showFinishNotification();
-        
+
+		showFinishNotification();
+
 		sentlines.clear();
 		lineno = -1;
-		resendfrom = -1;		
+		resendfrom = -1;
 		setPrinting(false);
 		homeAxis('X');
-		homeAxis('Y');	
-		
-		addThread=null;
-		
+		homeAxis('Y');
+
+		addThread = null;
+
 		lMainActivity.showProgress(R.string.print_finished_);
 		lMainActivity.updateInterface();
 	}
-	
-	
+
 	/**
 	 * notifies the the User of the Printing Success
 	 */
 	@SuppressWarnings("deprecation")
 	private void showFinishNotification() {
 		Intent i = new Intent(lMainActivity, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(lMainActivity, 0, i, 0);
-		
-        Notification notif = new Notification(R.drawable.icon, "Print Finished", System.currentTimeMillis());
-        notif.setLatestEventInfo(lMainActivity, "Printerinfo", "Print Finished", contentIntent);
-        notif.flags = Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
-                
-        mNotificationManager.notify(1234, notif);
-        
+		PendingIntent contentIntent = PendingIntent.getActivity(lMainActivity,
+				0, i, 0);
 
-        
+		Notification notif = new Notification(R.drawable.icon,
+				"Print Finished", System.currentTimeMillis());
+		notif.setLatestEventInfo(lMainActivity, "Printerinfo",
+				"Print Finished", contentIntent);
+		notif.flags = Notification.FLAG_AUTO_CANCEL
+				| Notification.FLAG_SHOW_LIGHTS;
+
+		mNotificationManager.notify(1234, notif);
+
 	}
 
 	public boolean executeMove(char aAxis, double aDistance, double feedrate) {
@@ -907,7 +922,23 @@ public class Printcore {
 		// TODO Auto-generated method stub
 		lastReadByte = alastReadByte;
 	}
-	
+
+	public float getTemperature_target() {
+		return temperature_target;
+	}
+
+	public void setTemperature_target(float temperature_target) {
+		this.temperature_target = temperature_target;
+	}
+
+	public float getBedtemperature_target() {
+		return bedtemperature_target;
+	}
+
+	public void setBedtemperature_target(float bedtemperature_target) {
+		this.bedtemperature_target = bedtemperature_target;
+	}
+
 	class AddThread implements Runnable {
 
 		@Override
@@ -925,8 +956,8 @@ public class Printcore {
 						if (Buffer.size() < 200) {
 							if ((aDataRow = myFile.readLine()) == null) {
 								goAhead = false;
-								//stopPrint();
-								
+								// stopPrint();
+
 								break;
 							}
 							tmpDataRow = aDataRow.split(";");
