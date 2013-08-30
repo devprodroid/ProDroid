@@ -77,7 +77,7 @@ import com.lamerman.SelectionMode;
 public class MainActivity extends Activity implements OnItemSelectedListener {
 
 	// Surface and GUI
-	private TextView mTitleTextView;
+	private TextView tvDriverInfo;
 	private TextView mDumpTextView;
 	private ScrollView mScrollView;
 
@@ -94,6 +94,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	private Button btn_y_up;
 	private Button btn_x_down;
 	private Button btn_x_up;
+	private ImageButton btn_home_x;
+	private ImageButton btn_home_y;
 
 	// Z Translation
 	private ImageButton btn_z_home;
@@ -112,6 +114,12 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	private ProgressBar pbBed;
 	private TextView tvHeat;
 	private TextView tvBed;
+
+	// Information box
+	private TextView tvServerStatus;
+	private TextView tvServerAddress;
+
+	private TextView tvFileName;
 
 	private boolean progressOpen;
 
@@ -132,11 +140,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 	private final String TAG = "prodroid";
 
-	// file dialog constants
-	private final int REQUEST_SAVE = 2;
 	private final int REQUEST_LOAD = 3;
-	private final int REQUEST_DROPLOAD = 4;
-
 	String filePath = "";
 	double currentControlDistance = 1;
 	public ProgressDialog dialog;
@@ -189,11 +193,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		findViewById(R.id.mainLayout).requestFocus();
 
 		mChooser = new DbxChooser(APP_KEY);
-
-		// mChooser.pretendNotAvailable();
-
-		// Create weserver
-
 	}
 
 	/**
@@ -230,12 +229,16 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	 */
 	private void linkViews() {
 		// TextViews
-		mTitleTextView = (TextView) findViewById(R.id.demoTitle);
+		tvDriverInfo = (TextView) findViewById(R.id.tvDriverInfo);
 		mDumpTextView = (TextView) findViewById(R.id.demoText);
 
 		tvProgress = (TextView) findViewById(R.id.tvProgress);
 		tvHeat = (TextView) findViewById(R.id.tvHeat);
 		tvBed = (TextView) findViewById(R.id.tvBed);
+
+		tvServerStatus = (TextView) findViewById(R.id.tvWebserver);
+		tvServerAddress = (TextView) findViewById(R.id.tvServerAddress);
+		tvFileName = (TextView) findViewById(R.id.tvFileName);
 
 		// ScrollViews
 		mScrollView = (ScrollView) findViewById(R.id.demoScroller);
@@ -253,6 +256,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		btn_y_up = (Button) findViewById(R.id.btn_y_up);
 		btn_x_down = (Button) findViewById(R.id.btn_x_down);
 		btn_x_up = (Button) findViewById(R.id.btn_x_up);
+
+		btn_home_x = (ImageButton) findViewById(R.id.btn_home_X);
+		btn_home_y = (ImageButton) findViewById(R.id.btn_home_Y);
 
 		// Z Translation
 		btn_z_home = (ImageButton) findViewById(R.id.btn_z_home);
@@ -310,7 +316,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			@Override
 			public void onClick(View v) {
 
-				lPrintcore.printtest();
 				lPrintcore.startPrint(filePath, fileLength, resumeFilePointer);
 				updateInterface();
 			}
@@ -330,7 +335,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if (btnMonitor.isChecked()) {
 					lPrintcore.enableMonitoring();
 				} else { // Turn Off
@@ -365,6 +369,12 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 							.parseFloat(sharedPref.getString(
 									"pref_print_xyfeedrate", "300")));
 					break;
+				case R.id.btn_home_X:
+					lPrintcore.homeAxis('X');
+					break;
+				case R.id.btn_home_Y:
+					lPrintcore.homeAxis('Y');
+					break;
 				case R.id.btn_switch_distance: {
 					if (currentControlDistance >= 100)
 						currentControlDistance = 0.1;
@@ -382,12 +392,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		btn_y_down.setOnClickListener(controlClickListener);
 		btn_y_up.setOnClickListener(controlClickListener);
 
+		btn_home_x.setOnClickListener(controlClickListener);
+		btn_home_y.setOnClickListener(controlClickListener);
+
 		OnClickListener zControlListener = new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
 				switch (v.getId()) {
 				case R.id.btn_z_up:
 					lPrintcore.executeMove('Z', currentControlDistance, Float
@@ -503,7 +514,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	 * @throws IOException
 	 */
 	protected boolean checkFile(String lfilePath) throws IOException {
-		// TODO Auto-generated method stub
+		
 
 		File lFile = new File(lfilePath);
 		InputStreamReader inputStreamReader = null;
@@ -524,7 +535,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				lineCount++;
 
 			}
-
+			tvFileName.setText(lFile.getName());
 			return true;
 		} finally {
 			if (inputStreamReader != null)
@@ -559,7 +570,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		btnHeat.setChecked(false);
 		btnBed.setChecked(false);
 		mDumpTextView.setText("");
-		mTitleTextView.setText("");
+		tvDriverInfo.setText("");
 
 	}
 
@@ -694,7 +705,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			btnStartPrint.setEnabled(checkFile(filePath));
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -746,7 +757,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 				webserv.startServer(lPort);
 			}
-		}
+		} else
+			updateServerStatus(false, "");
 	}
 
 	/**
@@ -755,15 +767,15 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	 * @param aLine
 	 *            The Message
 	 */
-	public void showMessage(String aLine) {
+	public void showMessage(String data) {
 		Time now = new Time();
 		now.setToNow();
-		mDumpTextView.append(now.hour + ":" + now.minute + " " + aLine + "\n");
+		mDumpTextView.append(now.hour + ":" + now.minute + " " + data + "\n");
 		mScrollView.smoothScrollTo(0, mDumpTextView.getBottom());
 	}
 
-	public void updateTitleView(String aMessage) {
-		mTitleTextView.setText(aMessage);
+	public void updateDriverInfo(String aMessage) {
+		tvDriverInfo.setText(aMessage);
 	}
 
 	/**
@@ -842,6 +854,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		}
 	}
+	
+	
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
@@ -877,6 +891,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		edtExtrudeDist.setText(Integer.toString(currentExtrudeDistance));
 		edtExtrueRate.setText(Integer.toString(currentExtrudeRate));
 
+		if (filePath == "")
+			tvFileName.setText(R.string.no_file_loaded_);
 	}
 
 	/**
@@ -971,7 +987,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 					// checkFile(filePath);
 					btnStartPrint.setEnabled(checkFile(filePath));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 
@@ -1031,5 +1047,17 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			return null;
 		}
 
+	}
+
+	public void updateServerStatus(boolean running, String ipAddress) {
+		if (running) {
+			tvServerStatus.setText(getString(R.string.webserver_status_) + " "
+					+ getString(R.string.running));
+			tvServerAddress.setText("IP:Port: " + ipAddress);
+		} else {
+			tvServerStatus.setText(getString(R.string.webserver_status_) + " "
+					+ getString(R.string.stopped));
+			tvServerAddress.setText("IP:Port: -");
+		}
 	}
 }

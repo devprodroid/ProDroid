@@ -40,13 +40,13 @@
                 android:id="@+id/tvProgress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="40%"
+                android:text=""
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="400dip"
+            android:id="@+id/llLogWindow"
+            android:layout_width="350dip"
             android:layout_height="200dip"
             android:layout_alignBottom="@+id/rlcontrols_ref"
             android:layout_alignParentTop="true"
@@ -70,7 +70,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="100"
+                    android:textSize="12sp"
                     android:typeface="monospace" />
+
             </ScrollView>
         </LinearLayout>
 
@@ -89,6 +91,17 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/buttoncard"
             layout="@layout/rlcontrols" />
+        
+         <include
+             android:id="@+id/rlinfo_ref"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:layout_alignBottom="@+id/llLogWindow"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentTop="true"
+             android:layout_toRightOf="@+id/llLogWindow"
+             layout="@layout/rlinfos" />
+
     </RelativeLayout>
 
 </HorizontalScrollView>

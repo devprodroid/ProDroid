@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlinfos"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:drawable/dialog_holo_light_frame"
+    android:orientation="vertical">
+    
+
+
+        <TextView
+            android:id="@+id/tvFileCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filename_" />
+
+        <TextView
+            android:id="@+id/tvFileName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+			android:minLines="3"
+			android:maxLines="3"
+            android:text="tvFileName" />
+
+        
+        <TextView
+            android:id="@+id/tvSerial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/serial_device_" />
+              <TextView
+            android:id="@+id/tvDriverInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_serial_device" />
+        
+              
+                
+                
+        <TextView
+            android:id="@+id/tvWebserver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tvWebserver" />
+
+        <TextView
+            android:id="@+id/tvServerAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tvServerAddress" />
+
+</LinearLayout>

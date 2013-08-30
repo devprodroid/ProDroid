@@ -95,11 +95,11 @@ public class Printer {
 		lMainActivity = aMainActivity;
 		initUSBInterface();
 
-		//if (mSerialDevice == null) {
-		//	lMainActivity.alertUser("No Printer found",
-		//			"Please connect a compatible serial device.");
-			// lMainActivity.updateTitleView("No serial device.");}
-		//}
+		// if (mSerialDevice == null) {
+		// lMainActivity.alertUser("No Printer found",
+		// "Please connect a compatible serial device.");
+		// lMainActivity.updateTitleView("No serial device.");}
+		// }
 	}
 
 	public void initUSBInterface() {
@@ -115,7 +115,7 @@ public class Printer {
 
 				mSerialDevice.setDTR(false);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
@@ -124,7 +124,7 @@ public class Printer {
 
 	public void pause() { // maybe we dont pause here. a service in the
 							// background is preferred
-		stopIoManager(); 
+		stopIoManager();
 		if (mSerialDevice != null) {
 			try {
 				mSerialDevice.close();
@@ -132,7 +132,7 @@ public class Printer {
 				mSerialDevice = null;
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
@@ -141,22 +141,26 @@ public class Printer {
 	public void resume() {
 		lUsbManager = (UsbManager) lMainActivity
 				.getSystemService(Context.USB_SERVICE);
-		mSerialDevice = UsbSerialProber.findFirstDevice(lUsbManager); //Acquire TODO:Test connection
+		mSerialDevice = UsbSerialProber.findFirstDevice(lUsbManager); // Acquire
+																		// TODO:Test
+																		// connection
 
 		Log.d(TAG, "Resumed, mSerialDevice=" + mSerialDevice);
 		if (mSerialDevice == null) {
 			// lMainActivity.alertUser("No Printer found",
 			// "Please connect a compatible serial device.");
-			lMainActivity.updateTitleView("No serial device.");
+			lMainActivity.showMessage("No serial device.");
+			lMainActivity.updateDriverInfo("No serial device.");
 		} else {
 			try {
 
-				mSerialDevice.setParameters(mbaudrate, mdatabits, mstopbits, mparitybits);// parameters for serial communication
+				mSerialDevice.setParameters(mbaudrate, mdatabits, mstopbits,
+						mparitybits);// parameters for serial communication
 				mSerialDevice.open();
 
 			} catch (IOException e) {
 				Log.e(TAG, "Error setting up device: " + e.getMessage(), e);
-				lMainActivity.updateTitleView("Error opening device: "
+				lMainActivity.showMessage("Error opening device: "
 						+ e.getMessage());
 				try {
 					mSerialDevice.close();
@@ -166,8 +170,8 @@ public class Printer {
 				mSerialDevice = null;
 				return;
 			}
-			lMainActivity.updateTitleView("Serial device: " + mSerialDevice);
 
+			lMainActivity.updateDriverInfo(mSerialDevice + "");
 			connected = true;
 		}
 

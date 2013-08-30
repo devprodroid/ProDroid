@@ -1,7 +1,5 @@
 package com.fhhst.prodroid.webserver;
 
-import com.fhhst.prodroid.gui.MainActivity;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -15,11 +13,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.fhhst.prodroid.gui.MainActivity;
+
 public class ProDroidServer {
 
 	private MainActivity lMainActivity;
 	private Server server;
-	
+
 	String filesDir;
 
 	@SuppressLint("HandlerLeak")
@@ -35,10 +35,9 @@ public class ProDroidServer {
 	public ProDroidServer(MainActivity aMainActivity) {
 		lMainActivity = aMainActivity;
 		filesDir = lMainActivity.getFilesDir().getPath().toString();
-        
-		boolean exists = (new File(filesDir)).exists();
+
 		try {
-			// if (!exists) {
+
 			(new File(filesDir)).mkdir();
 			BufferedWriter bout = new BufferedWriter(new FileWriter(filesDir
 					+ "/index.html"));
@@ -72,7 +71,7 @@ public class ProDroidServer {
 			server.stopServer();
 			server.interrupt();
 			log("Server was killed.");
-			
+
 		} else {
 			log("Cannot kill server!? Please restart your phone.");
 		}
@@ -97,24 +96,26 @@ public class ProDroidServer {
 
 			String ipAddress = intToIp(wifiInfo.getIpAddress());
 
-			if ((wifiInfo.getSupplicantState() != SupplicantState.COMPLETED)||ipAddress.contentEquals("0.0.0.0")) {
-				//new AlertDialog.Builder(lMainActivity)
-				//		.setTitle("Error")
-				//		.setMessage(
-				//				"Please connect to a WIFI-network for starting the webserver.")
-				//		.setPositiveButton("OK", null).show();
-				throw new Exception("Please connect to a WIFI-network. Server not started.");
+			if ((wifiInfo.getSupplicantState() != SupplicantState.COMPLETED)
+					|| ipAddress.contentEquals("0.0.0.0")) {
+				// new AlertDialog.Builder(lMainActivity)
+				// .setTitle("Error")
+				// .setMessage(
+				// "Please connect to a WIFI-network for starting the webserver.")
+				// .setPositiveButton("OK", null).show();
+				throw new Exception(
+						"Please connect to a WIFI-network. WebServer not started.");
 			}
 
-			lMainActivity.showMessage("Starting server " + ipAddress + ":" + port + ".\n");
-			server = new Server(ipAddress, port, mHandler,filesDir,this);
+			server = new Server(ipAddress, port, mHandler, filesDir, this);
 			server.start();
+			lMainActivity.updateServerStatus(true, ipAddress + ":" + port);
 
-			
 		} catch (Exception e) {
 			log(e.getMessage());
+			lMainActivity.updateServerStatus(false, "");
 			lMainActivity.showMessage(e.getLocalizedMessage());
-			
+
 		}
 
 	}

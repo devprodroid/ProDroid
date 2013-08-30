@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009,2010 Markus Bode InternetlÃ¶sungen (bolutions.com)
+ * Copyright (C) 2009,2010 Markus Bode Internetlösungen (bolutions.com)
  * 
  * Licensed under the GNU General Public License v3
  * 
@@ -28,12 +28,12 @@ class ServerHandler extends Thread {
 
 	private PrintWriter out;
 	private Socket toClient;
-	private String mfilesDir;
+
 	private int printProgress;
 
 	ServerHandler(Socket s, String afilesDir, Server aServ) {
 		toClient = s;
-		this.mfilesDir = afilesDir;
+
 		printProgress = aServ.proServer.printProgress;
 	}
 

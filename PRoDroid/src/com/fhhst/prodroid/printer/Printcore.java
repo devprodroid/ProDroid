@@ -25,6 +25,7 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
@@ -32,6 +33,7 @@ import android.util.Log;
 import com.fhhst.prodroid.R;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -177,7 +179,7 @@ public class Printcore {
 		lPrinter = new Printer(this, lMainActivity);
 		lPrinter.setOnline(false);
 		mNotificationManager = (NotificationManager) lMainActivity
-				.getSystemService(lMainActivity.NOTIFICATION_SERVICE);
+				.getSystemService(Context.NOTIFICATION_SERVICE);
 	}
 
 	public void connect() {
@@ -341,7 +343,8 @@ public class Printcore {
 			lCommand = lCommand + "\n";
 
 			lPrinter.send(lCommand.getBytes());
-			// lMainActivity.showMessage("SENT: " + lCommand);
+			if (debugMode)
+				Log.d("PERFORMANCE", "SENT: " + lCommand);
 
 			// remove oldest element if capacity is reached
 			if (sentlines.size() > 100)
@@ -361,8 +364,10 @@ public class Printcore {
 	private void sendnow(String acommand) {
 		String lCommand;
 		lCommand = acommand + "\n";
-		lMainActivity.showMessage("SENT: " + lCommand);
+
 		lPrinter.send(lCommand.getBytes());
+		if (debugMode)
+			Log.d("PERFORMANCE", "SENT: " + lCommand);
 	}
 
 	/**
@@ -383,7 +388,6 @@ public class Printcore {
 		try {
 			message = new String(data, "UTF8");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} // for UTF8 encoding
 
@@ -416,9 +420,7 @@ public class Printcore {
 					recvlines.add(splitMessage[i]);
 				}
 				bufferedlines.clear();
-				if (debugMode) {
-					lMainActivity.showMessage(recvlines.toString());
-				}
+
 				readlines();
 			}
 		} else { // message has no line break
@@ -450,6 +452,10 @@ public class Printcore {
 				checkAndSetOnline();
 
 			} else { // Online
+				if (debugMode) {
+					lMainActivity.showMessage("RECV: " + recvlines.toString());
+					Log.d("PERFORMANCE", "RECV: " + recvlines.toString());
+				}
 				if (isPrinting()) {
 					printListener();
 				} else {
@@ -461,8 +467,6 @@ public class Printcore {
 						if (lLine.length() <= 2)
 							continue; // Single characters will be ignored here
 
-						if (debugMode)
-							Log.d("PERFORMANCE", "RECV: " + lLine);
 						// Grab Temperatures
 						parseTemperatures(lLine);
 
@@ -587,7 +591,7 @@ public class Printcore {
 
 	private void sendnext() {
 		String tmpLine;
-		// TODO Auto-generated method stub
+
 		if (resendfrom == -1) {
 			lineno++;
 			tmpLine = Buffer.poll();
@@ -632,7 +636,7 @@ public class Printcore {
 					|| (recvlines.get(i).startsWith("start") || (recvlines
 							.get(i).startsWith("Grbl")))) {
 				lPrinter.setOnline(true);
-				lMainActivity.updateTitleView(lMainActivity
+				lMainActivity.showMessage(lMainActivity
 						.getString(R.string.printer_is_online_)
 						+ recvlines.get(i) + "\n");
 
@@ -651,8 +655,7 @@ public class Printcore {
 	private void parseTemperatures(String aLine) {
 		String[] splitLine = aLine.split(" ");
 		try {
-			if ((aLine.startsWith("ok"))
-					&& ((aLine.contains("T:") || (aLine.contains("B:"))))) {
+			if ((aLine.contains("T:") || (aLine.contains("B:")))) {
 
 				for (int i = 0; i < splitLine.length; i++) {
 					if (splitLine[i].startsWith("T:")) {
@@ -757,8 +760,7 @@ public class Printcore {
 	 * thread and pause printer
 	 */
 	public void pausePrint() {
-		// TODO Auto-generated method stub
-
+		
 		// Alles pausieren:
 
 		setPrinting(false);
@@ -800,11 +802,20 @@ public class Printcore {
 		lineno = -1;
 		resendfrom = -1;
 		setPrinting(false);
+
 		homeAxis('X');
 		homeAxis('Y');
 
 		addThread = null;
-
+		lastReadByte = 0;
+		if (myFile != null) {
+			try {
+				myFile.close();
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+		}
 		lMainActivity.showProgress(R.string.print_finished_);
 		lMainActivity.updateInterface();
 	}
@@ -914,12 +925,12 @@ public class Printcore {
 	}
 
 	public long getLastReadByte() {
-		// TODO Auto-generated method stub
+	
 		return lastReadByte;
 	}
 
 	public void setLastReadByte(long alastReadByte) {
-		// TODO Auto-generated method stub
+
 		lastReadByte = alastReadByte;
 	}
 
@@ -943,7 +954,7 @@ public class Printcore {
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
+	
 			String aDataRow;
 			String[] tmpDataRow;
 			Buffer.clear();
@@ -974,7 +985,7 @@ public class Printcore {
 					}
 
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 

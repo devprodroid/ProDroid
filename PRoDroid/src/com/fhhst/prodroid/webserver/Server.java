@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009,2010 Markus Bode InternetlÃ¶sungen (bolutions.com)
+ * Copyright (C) 2009,2010 Markus Bode Internetösungen (bolutions.com)
  * 
  * Licensed under the GNU General Public License v3
  * 

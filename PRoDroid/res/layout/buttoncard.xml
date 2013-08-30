@@ -15,8 +15,8 @@
             android:layout_width="85dip"
             
             android:layout_height="wrap_content"
-            android:textOff="@string/heat_off"
-            android:textOn="@string/heat_on" />
+            android:textOff="@string/heat"
+            android:textOn="@string/heat" />
 
         <Spinner
             android:id="@+id/spHeat"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:entries="@array/saHeatTemps"
-            android:prompt="@string/heat_" />
+            android:prompt="@string/heat" />
 
         <ToggleButton
             android:id="@+id/btnMonitor"
@@ -43,8 +43,8 @@
             android:id="@+id/btnBed"
             android:layout_width="85dip"
             android:layout_height="wrap_content"
-            android:textOff="@string/bed_off"
-            android:textOn="@string/bed_on" />
+            android:textOff="@string/bed"
+            android:textOn="@string/bed" />
 
         <Spinner
             android:id="@+id/spBed"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:entries="@array/saBedTemps"
-            android:prompt="@string/bed_" />
+            android:prompt="@string/bed" />
     </LinearLayout>
 
     <TextView

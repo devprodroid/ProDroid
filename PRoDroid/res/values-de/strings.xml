@@ -7,8 +7,8 @@
     <string name="lblBtnReset">Reset</string>
     <string name="lblBtnConnect">Verbinden</string>
     <string name="lblBtnDisconnect">Trennen</string>
-    <string name="bed_">Bed:</string>
-    <string name="heat_">Heat:</string>
+    <string name="bed">Bett:</string>
+    <string name="heat">Düse:</string>
     <string name="heat_on">Heat ON</string>
     <string name="heat_off">Heat Off</string>
     <string name="bed_on">Bed ON</string>
@@ -25,7 +25,7 @@
     <string name="printer_is_offline_unable_to_move_">Drucker ist offline, bewegen nicht möglich </string>
     <string name="printer_is_currently_printing_please_pause_the_print_before_you_issue_manual_commands_">Druck läuft, bitte den Drucker pausieren um manuelle Kommandos auszuführen.</string>
     <string name="setting_hotend_temperature_to_">"Setze Temperatur auf "</string>
-    <string name="_degree_celsius_">" °C.\n"</string>
+    <string name="_degree_celsius_">" °C."</string>
     <string name="printer_is_online_">"Drucker ist online: "</string>
     <string name="buffer_is_null_">Buffer ist leer\n</string>
     <string name="input_cannot_be_empty">Eingabe darf nicht leer sein</string>
@@ -46,6 +46,25 @@
     <string name="stop_watch">Überwachung</string>
     <string name="extrude">Extrudieren</string>
     <string name="reverse">Umkehren</string>
-        <string name="please_check_the_connectionsettings_and_make_sure_baudrate_is_correct_">Bitte prüfen Sie die Verbindingseinstellungen, insbesondere die Baudrate.</string>
-
+    <string name="please_check_the_connectionsettings_and_make_sure_baudrate_is_correct_">Bitte prüfen Sie die Verbindingseinstellungen, insbesondere die Baudrate.</string>
+   
+    <string name="webserver_status_">Webserver Status:</string>
+    <string name="running">läuft</string>
+    <string name="stopped">gestoppt</string>
+    <string name="filename_">Datei:</string>
+    <string name="no_file_loaded_">Keine Datei geladen.</string>
+    <string name="not_connected_to_wifi">Keine Wifi Verbidung</string>
+    <string name="please_connect_to_a_wifi_network_webserver_not_started_">Bitte mit einem Wifi verbinden, Webserver nicht gestartet.</string>
+    <string name="serial_device_">Serielles Gerät:</string>
+    
+    <string name="data_rate_in_bits_per_second_baud_">Datenrate in Bits je Sekunde (baud)</string>
+    <string name="number_of_data_bits">Anzahl der Datenbits</string>
+    <string name="number_of_stop_bits">Anzahl der Stopbits</string>
+    <string name="parity_bits">Parität</string>
+    <string name="disconnect_dropbox">Dropbox entfernen</string>
+    <string name="enable_monitoring_webserver">Webserver aktivieren</string>
+    <string name="monitoring_webserver_port">Webserver Port</string>
+    <string name="z_manual_feedrate">z manuelle Vorschubrate</string>
+    <string name="x_and_y_manual_feedrate">X und Y manuelle Vorschubrate</string>
+    <string name="e_manual_feedrate">e manuelle Vorschubrate</string>
 </resources>
