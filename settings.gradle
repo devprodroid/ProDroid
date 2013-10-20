@@ -1,0 +1,4 @@
+include ':PRoDroid'
+include ':UsbSerialLibrary'
+include ':FileExplorer'
+include ':DropboxChooserSDK'
